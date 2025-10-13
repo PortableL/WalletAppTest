@@ -1,0 +1,624 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>GcashTrial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+    <script src="../static/script.js" defer></script>
+  </head>
+  <body class="bg-[#e6f0ff] min-h-screen flex flex-col">
+    <div
+      class="h-screen w-full max-w-md mx-auto border border-gray-300 rpounded-3xl shadow-lg flex flex-col justify-between"
+    >
+      <div
+        class="px-4 pt-6 pb-4 relative max-w-md mx-auto w-full overflow-y-auto:hidden"
+      >
+        <!-- Top bar with logo, Hello!, Summer Deals, Help -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-1">
+            <img
+              alt="GCash logo blue circle with letter G and signal waves"
+              class="w-8 h-8"
+              height="32"
+              src="https://storage.googleapis.com/a1aa/image/bc7ab97a-de1a-49f4-e6fe-72a7b428943c.jpg"
+              width="32"
+            />
+            <span class="text-[#0a2e79] font-semibold text-lg select-none">
+              Hello!
+            </span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button
+              class="bg-[#f89f1b] text-white text-xs font-semibold rounded-full px-4 py-1 select-none"
+              type="button"
+            >
+              Tap for
+              <br />
+              Summer Deals
+            </button>
+            <button
+              class="bg-[#0052ff] text-white text-xs font-semibold rounded-full px-4 py-1 select-none"
+              type="button"
+            >
+              HELP
+            </button>
+          </div>
+        </div>
+        <!-- Wallet tabs -->
+        <div class="tabs bg-white rounded-t-xl shadow-md">
+          <!-- Tab buttons -->
+          <div
+            class="flex gap-x-1 border-gray-200 text-sm font-semibold text-[#0a2e79]"
+          >
+            <button
+              class="tab flex-1 border-r border-gray-300 bg-[#0052ff] text-white py-2 rounded-t-xl select-none"
+            >
+              Wallet
+            </button>
+            <button
+              class="tab flex-1 py-2 border-r border-gray-300 select-none"
+            >
+              Save
+            </button>
+            <button
+              class="tab flex-1 py-2 border-r border-gray-300 select-none"
+            >
+              Borrow
+            </button>
+            <button
+              class="tab flex-1 py-2 border-r border-gray-300 select-none"
+            >
+              Grow
+            </button>
+          </div>
+          <!-- Wallet balance and cash in --><!--Wallet Content-->
+          <div id="wallet-content" class="">
+            <div
+              class="bg-[#0052ff] text-white px-5 py-4 flex justify-between items-center rounded-b-xl"
+            >
+              <div>
+                <div
+                  class="tab-content uppercase text-xs opacity-60 tracking-widest select-none flex items-center space-x-1"
+                >
+                  <span> Available Balance </span>
+                  <svg
+                    class="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewbox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                    <path
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <div
+                  class="mt-1 flex items-center space-x-1 font-semibold text-3xl select-none"
+                >
+                  <span class="text-3xl font-extrabold"> ₱ </span>
+                  <span> {{ '%.2f' | format(balance) }} </span>
+                </div>
+              </div>
+              <div class="mt-4">
+                <button class="px-2.5 py-1 select-none" type="button">
+                  <a
+                    href="{{ url_for('cashin_options') }}"
+                    class="inline-block bg-sky-200 text-[#0052ff] text-sm font-semibold rounded-full px-[12px] py-[3px] select-none border border-[#0052ff]"
+                  >
+                    + Cash In
+                  </a>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Save Content -->
+          <div id="save-content" class="hidden">
+            <div
+              class="bg-[#0052ff] text-white px-5 py-4 flex justify-between items-center rounded-b-xl"
+            >
+              <div>
+                <div
+                  class="uppercase text-xs opacity-60 tracking-widest select-none flex items-center space-x-1"
+                >
+                  <span> Current Savings </span>
+
+                  <!-- Toggle Button with SVG -->
+                  <button id="toggle-savings" class="focus:outline-none">
+                    <!-- default eye icon -->
+                    <svg
+                      id="eye-open-icon"
+                      class="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7
+                    -1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+
+                    <!-- Hidden (eye-closed) icon -->
+                    <svg
+                      id="eye-closed-icon"
+                      class="h-4 w-4 hidden"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M17.94 17.94A10.94 10.94 0 0 1 12 20C7 20 2.73 16.11 1 12
+                          c.73-1.73 1.9-3.29 3.33-4.47"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M10.58 10.58A2 2 0 0 0 12 14a2 2 0 0 0 1.42-3.42"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M4.22 4.22 19.78 19.78"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Balance Display -->
+                <div
+                  class="mt-1 flex items-center space-x-1 font-semibold text-3xl select-none"
+                >
+                  <span class="text-2xl font-extrabold">₱</span>
+                  <span id="savings-amount" class="text-[25px]">*********</span>
+                </div>
+              </div>
+
+              <button
+                class="bg-white text-[#0052ff] text-sm font-semibold rounded-md px-4 py-1 select-none"
+                type="button"
+              >
+              <a href="{{ url_for('save_now') }}">
+                Save Now!
+               </a>
+              </button>
+            </div>
+          </div>
+          <!--Borrow content-->
+          <div id="borrow-content" class="hidden">
+            <div
+              class="bg-[#0052ff] text-white px-5 py-4 flex justify-between items-center rounded-b-xl"
+            >
+              <div>
+                <div
+                  class="tab-content uppercase text-xs opacity-60 tracking-widest select-none flex items-center space-x-1"
+                >
+                  <path
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </div>
+                <div
+                  class="mt-1 flex items-center space-x-2 font-semibold text-xl select-none"
+                >
+                  <span> Short sa buget? Borrow na </span>
+                </div>
+              </div>
+              <button
+                class="bg-white text-[#0052ff] text-sm font-semibold rounded-full px-2 py-2 select-none"
+                type="button"
+              >
+                <span> Learn more</span>
+              </button>
+            </div>
+          </div>
+          <!-- Borrow icons (hidden by default) -->
+          <div
+    id="icons-borrow"
+    class="hidden grid grid-cols-3 gap-4 text-center mt-6"
+  >
+    <div
+      class="flex flex-col items-center p-3 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95 cursor-pointer transition] cursor-pointer transition"
+    >
+      <div class="bg-blue-100 p-4 rounded-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="#1d4ed8"
+          class="w-8 h-8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.375 10.5H5.25L4.5 10.5h15l-.75 10.5zM10.125 15a.375.375 0 11-.75 0 .375.375 0 01.75 0zm3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+          />
+        </svg>
+      </div>
+      <p class="text-sm mt-2 font-medium text-black">G-Gives</p>
+    </div>
+
+    <div
+      class="flex flex-col items-center p-3 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95 cursor-pointer transition"
+    >
+      <div class="bg-green-100 p-4 rounded-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="#16a34a"
+          class="w-8 h-8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.086.823.25 1.226l-.25.865a2.25 2.25 0 01-2.246 2.246H5.25a2.25 2.25 0 01-2.246-2.246l-.25-.865A48.455 48.455 0 013 6.108c0-.231.035-.454.1-.664m5.801 0A48.297 48.297 0 0112 4.5c4.634 0 8.943.89 12.75 2.54 1.131.398 2.535-1.127 1.258-2.246A48.297 48.297 0 0112 2.25C7.366 2.25 3.057 3.14 0 4.795c-1.277 1.12-1.13 2.644.258 2.246A48.455 48.455 0 016.101 5.4c.065-.21.1-.433.1-.664m5.801 0a1 1 0 011 1v.664a1 1 0 01-1 1h-.664a1 1 0 01-1-1v-.664a1 1 0 011-1h.664z"
+          />
+        </svg>
+      </div>
+      <p class="text-sm mt-2 font-medium text-black">G-Loan</p>
+    </div>
+
+    <div
+      class="flex flex-col items-center p-3 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95 cursor-pointer transition cursor-pointer transition"
+    >
+      <div class="bg-yellow-100 p-4 rounded-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="#ca8a04"
+          class="w-8 h-8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h6M3.75 16.5h.008v.008H3.75v-.008zM3.75 19.5h.008v.008H3.75v-.008zm.75-5.25h.008v.008H4.5v-.008zm.75 2.25h.008v.008H5.25v-.008zM7.5 16.5h.008v.008H7.5v-.008zm.75 2.25h.008v.008H8.25v-.008zM10.5 16.5h.008v.008H10.5v-.008zm.75 2.25h.008v.008H11.25v-.008zM13.5 16.5h.008v.008H13.5v-.008zm.75 2.25h.008v.008H14.25v-.008zM16.5 16.5h.008v.008H16.5v-.008zm.75 2.25h.008v.008H17.25v-.008zM6 4.5h12a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6.75A2.25 2.25 0 016 4.5z"
+          />
+        </svg>
+      </div>
+      <p class="text-sm mt-2 font-medium text-black">G-Credit</p>
+    </div>
+</div>
+
+          <!--- Grow -->
+          <div id="grow-content" class="hidden">
+            <div
+              class="bg-[#0052ff] text-white px-5 py-4 flex justify-between items-center rounded-b-xl"
+            >
+              <div>
+                <div
+                  class="tab-content uppercase text-xs opacity-60 tracking-widest select-none flex items-center space-x-1"
+                >
+                  <span> Total Investment </span>
+                  <svg
+                    class="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewbox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                    <path
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <div
+                  class="mt-1 flex items-center space-x-1 font-semibold text-3xl select-none"
+                >
+                  <span class="text-3xl font-extrabold"> ₱ </span>
+                  <span> 0.00 </span>
+                </div>
+              </div>
+              <button
+                class="bg-white text-[#0052ff] text-sm font-semibold rounded-full px-3 py-1 select-none"
+                type="button"
+              >
+                <span>INVEST NOW!</span>
+              </button>
+            </div>
+          </div>
+          <!-- Wallet icons grid -->
+          <div id="icons-default">
+            <div
+              class="grid grid-cols-4 gap-y-6 gap-x-2 px-5 py-6 text-[#0a2e79] text-xs select-none"
+            >
+              <div class="flex flex-col items-center space-y-1">
+                <img
+                  alt="Icon of two arrows with peso sign representing Send"
+                  class="w-8 h-8"
+                  height="32"
+                  src="https://storage.googleapis.com/a1aa/image/948c7094-4687-4f0c-afca-23d4f59fe0a8.jpg"
+                  width="32"
+                />
+                <span> Send </span>
+              </div>
+              <div class="flex flex-col items-center space-y-1">
+                <img
+                  alt="Icon of mobile phone with peso sign representing Load"
+                  class="w-8 h-8"
+                  height="32"
+                  src="https://storage.googleapis.com/a1aa/image/722a9229-fb53-4134-f0f4-3cfbdb86bff7.jpg"
+                  width="32"
+                />
+                <span> Load </span>
+              </div>
+              <div class="flex flex-col items-center space-y-1">
+                <img
+                  alt="Icon of bank building representing Transfer"
+                  class="w-8 h-8"
+                  height="32"
+                  src="https://storage.googleapis.com/a1aa/image/c213d87f-d6c8-4969-17ec-a0553346537d.jpg"
+                  width="32"
+                />
+                <span> Transfer </span>
+              </div>
+              <div class="flex flex-col items-center space-y-1">
+                <img
+                  alt="Icon of bill with checkmark representing Bills"
+                  class="w-8 h-8"
+                  height="32"
+                  src="https://storage.googleapis.com/a1aa/image/6098bc8e-ad09-429e-a13b-92466b0d0488.jpg"
+                  width="32"
+                />
+                <span> Bills </span>
+              </div>
+              <div class="flex flex-col items-center space-y-1">
+                <img
+                  alt="Icon of hand holding peso bill representing Borrow"
+                  class="w-8 h-8"
+                  height="32"
+                  src="https://storage.googleapis.com/a1aa/image/4d4c5385-725f-4051-de2e-2c1112c98775.jpg"
+                  width="32"
+                />
+                <span> Borrow </span>
+              </div>
+              <div class="flex flex-col items-center space-y-1">
+                <img
+                  alt="Icon of piggy bank with peso sign representing GSave"
+                  class="w-8 h-8"
+                  height="32"
+                  src="https://storage.googleapis.com/a1aa/image/b6c0bea2-7960-4e30-71e2-52e9b58ea959.jpg"
+                  width="32"
+                />
+                <span> GSave </span>
+              </div>
+              <div class="flex flex-col items-center space-y-1">
+                <img
+                  alt="Icon of plant pot with peso sign representing GInvest"
+                  class="w-8 h-8"
+                  height="32"
+                  src="https://storage.googleapis.com/a1aa/image/3d561e64-1f36-4d1e-052a-12036defc1ae.jpg"
+                  width="32"
+                />
+                <span> GInvest </span>
+              </div>
+              <div class="flex flex-col items-center space-y-1">
+                <img
+                  alt="Icon of three dots representing View All"
+                  class="w-8 h-8"
+                  height="32"
+                  src="https://storage.googleapis.com/a1aa/image/39e7e6f9-43d8-451b-84c1-acf1d5556ff6.jpg"
+                  width="32"
+                />
+                <span> View All </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Explore the App -->
+        <div class="mt-6">
+          <h2 class="text-[#0a2e79] font-semibold text-lg select-none mb-3">
+            Explore the App
+          </h2>
+          <div class="flex space-x-4 overflow-x-auto:hidden pb-2">
+            <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+              <div
+                class="w-12 h-12 rounded-full border-2 border-[#0052ff] flex items-center justify-center"
+              >
+                <img
+                  alt="Icon of shield with plus sign representing GInsure"
+                  class="w-7 h-7"
+                  height="28"
+                  src="https://storage.googleapis.com/a1aa/image/a59c1dfc-438b-4009-29d4-74227254cc6c.jpg"
+                  width="28"
+                />
+              </div>
+              <span class="text-xs text-[#0a2e79] select-none"> GInsure </span>
+            </div>
+            <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+              <div
+                class="w-12 h-12 rounded-full border-2 border-[#f44336] flex items-center justify-center bg-white"
+              >
+                <img
+                  alt="Icon with red shopping cart and small icons representing GLife"
+                  class="w-7 h-7"
+                  height="28"
+                  src="https://storage.googleapis.com/a1aa/image/daee8caf-c540-4484-d1b4-b4c62985f3d3.jpg"
+                  width="28"
+                />
+              </div>
+              <span class="text-xs text-[#0a2e79] select-none"> GLife </span>
+            </div>
+            <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+              <div
+                class="w-12 h-12 rounded-full border-2 border-[#0052ff] flex items-center justify-center"
+              >
+                <img
+                  alt="Icon of gift box with sparkles representing A+ Rewards"
+                  class="w-7 h-7"
+                  height="28"
+                  src="https://storage.googleapis.com/a1aa/image/d64db720-f588-437c-2181-80dafce72b65.jpg"
+                  width="28"
+                />
+              </div>
+              <span class="text-xs text-[#0a2e79] select-none">
+                A+ Rewa...
+              </span>
+            </div>
+            <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+              <div
+                class="w-12 h-12 rounded-full border-2 border-[#0052ff] flex items-center justify-center"
+              >
+                <img
+                  alt="Icon of leaf with peso sign representing GForest"
+                  class="w-7 h-7"
+                  height="28"
+                  src="https://storage.googleapis.com/a1aa/image/043f21d3-017a-45a9-efeb-283964908783.jpg"
+                  width="28"
+                />
+              </div>
+              <span class="text-xs text-[#0a2e79] select-none"> GForest </span>
+            </div>
+            <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+              <div
+                class="w-12 h-12 rounded-full border-2 border-[#0052ff] flex items-center justify-center"
+              >
+                <img
+                  alt="Icon of tap with wireless signal representing Tap 'N Pay"
+                  class="w-7 h-7"
+                  height="28"
+                  src="https://storage.googleapis.com/a1aa/image/bfe544de-0c8f-4d24-b7a9-6d356a5d950d.jpg"
+                  width="28"
+                />
+              </div>
+              <span class="text-xs text-[#0a2e79] select-none">
+                Tap 'N Pay
+              </span>
+            </div>
+            <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+              <div
+                class="w-12 h-12 rounded-full border-2 border-[#0052ff] flex items-center justify-center"
+              >
+                <img
+                  alt="Icon of card with letter G representing Cards"
+                  class="w-7 h-7"
+                  height="28"
+                  src="https://storage.googleapis.com/a1aa/image/fde7b3da-173b-4554-6b8c-308cbd77380d.jpg"
+                  width="28"
+                />
+              </div>
+              <span class="text-xs text-[#0a2e79] select-none"> Cards </span>
+            </div>
+          </div>
+        </div>
+        <!-- Banner -->
+        <div
+          class="mt-6 rounded-xl overflow-hidden relative"
+          style="aspect-ratio: 16 / 7"
+        >
+          <img
+            alt="GCash GInsure banner with woman reading paper, text: Safe ang budget from hospital fees! Protect yourself from emergency health expenses, Avail GInsure Cash for Medical Costs, For as low as ₱224 per month, Medical Reimbursement, Daily Hospital Cash &amp; Critical Condition Allowance, Powered by Singlife"
+            class="w-full h-full object-cover"
+            height="260"
+            src="https://storage.googleapis.com/a1aa/image/b2395bb4-bcfa-4b2f-e8ad-2bc6c5a99e36.jpg"
+            width="600"
+          />
+        </div>
+        <!-- Get Cash for Medical Costs text -->
+        <div class="mt-4 mb-20">
+          <h3 class="text-[#0a2e79] font-semibold text-lg select-none">
+            Get Cash for Medical Costs!
+          </h3>
+          <p class="text-sm text-[#0a2e79] opacity-80 select-none">
+            Check out now!
+          </p>
+        </div>
+      </div>
+      <!-- Bottom navigation -->
+      <nav
+        class="mx-auto w-full max-w-md bg-white border-t border-gray-200 grid grid-cols-5 items-end text-sm text-[#0a2e79] font-semibold select-none px-1 py-2 rounded-2xl shadow-5"
+      >
+        <!-- Home -->
+        <button
+          class="flex flex-col items-center text-gray-700 hover:text-blue-700 hover:text-blue-700 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95"
+        >
+          <i class="fas fa-home text-xl"></i>
+          <span class="text-xs mt-1">Home</span>
+        </button>
+
+        <!-- Inbox -->
+        <button
+          class="flex flex-col items-center text-gray-700 hover:text-blue-700 hover:text-blue-700 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95"
+        >
+          <i class="far fa-envelope text-xl"></i>
+          <span class="text-xs mt-1">Inbox</span>
+        </button>
+
+        <!-- QR Center Button with Animation -->
+        <div class="flex flex-col items-center -mt-6">
+          <button
+            aria-label="QR"
+            class="transition-transform duration-200 ease-out hover:scale-110 active:scale-95 border-2 border-[#0052ff] rounded-full p-3 bg-white text-[#0052ff] shadow-md flex items-center justify-center"
+          >
+            <i class="fas fa-qrcode text-2xl"></i>
+          </button>
+          <div class="text-center mt-1 text-xs font-semibold">QR</div>
+        </div>
+
+        <!-- Transactions -->
+        <button
+          class="flex flex-col items-center text-gray-700 hover:text-blue-700 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95"
+        >
+          <i class="far fa-file-alt text-lg"></i>
+          <span class="text-xs mt-1">Transactions</span>
+        </button>
+
+        <!-- Profile -->
+        <button
+          class="flex flex-col items-center text-gray-700 hover:text-blue-700 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95"
+        >
+          <i class="far fa-user-circle text-xl"></i>
+          <span class="text-xs mt-1">Profile</span>
+        </button>
+      </nav>
+    </div>
+  </body>
+</html>

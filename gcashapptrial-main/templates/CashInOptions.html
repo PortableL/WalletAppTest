@@ -1,0 +1,391 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Cash In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-white h-screen overflow-hidden">
+    <div
+      class="h-full w-full max-w-md mx-auto border border-gray-300 rounded-3xl overflow-hidden shadow-lg flex flex-col"
+    >
+      <!-- Header -->
+      <header class="bg-[#1E6EF2] flex items-center justify-between px-4 py-3">
+        <button aria-label="Back" class="text-white text-lg">
+          <a href="{{ url_for('home') }}"><i class="fas fa-arrow-left"></i></a>
+        </button>
+        <h1 class="text-white font-semibold text-lg">Cash In</h1>
+        <button aria-label="Info" class="text-white text-lg">
+          <i class="fas fa-info-circle"></i>
+        </button>
+      </header>
+      <main class="flex-1 overflow-y-auto bg-white p-4">
+        <!-- Search -->
+        <div
+          class="flex items-center border border-gray-300 rounded-lg px-3 py-2 mb-4"
+        >
+          <i class="fas fa-search text-gray-400 text-base"> </i>
+          <input
+            aria-label="Search"
+            class="flex-grow ml-2 text-gray-700 text-sm placeholder-gray-400 focus:outline-none"
+            placeholder="Search"
+            type="search"
+          />
+          <button aria-label="Filter" class="text-gray-600 text-lg ml-2">
+            <i class="fas fa-sliders-h"> </i>
+          </button>
+        </div>
+        <!-- My Favorites -->
+        <section class="mb-6">
+          <div class="flex justify-between items-center mb-1">
+            <h2 class="text-gray-900 font-semibold text-sm">My Favorites</h2>
+            <button class="text-[#1E6EF2] text-sm font-medium">Edit</button>
+          </div>
+          <p class="text-gray-500 text-xs mb-3">
+            Tap the
+            <i class="fas fa-plus-circle text-gray-400"> </i>
+            to add a Cash In partner to your Favorites.
+          </p>
+          <div class="flex space-x-4">
+            <div
+              class="w-10 h-10 rounded-full border-2 border-dashed border-gray-300"
+            ></div>
+            <div
+              class="w-10 h-10 rounded-full border-2 border-dashed border-gray-300"
+            ></div>
+            <div
+              class="w-10 h-10 rounded-full border-2 border-dashed border-gray-300"
+            ></div>
+            <div
+              class="w-10 h-10 rounded-full border-2 border-dashed border-gray-300"
+            ></div>
+            <div
+              class="w-10 h-10 rounded-full border-2 border-dashed border-gray-300"
+            ></div>
+          </div>
+        </section>
+        <!-- How to Cash In -->
+        <section class="mb-6">
+          <h3 class="text-[#1E6EF2] font-semibold text-sm mb-3">
+            How to Cash In
+          </h3>
+          <ul class="space-y-4">
+            <li>
+              <button
+                class="flex items-center space-x-3 w-full text-left"
+                type="button"
+              >
+                <a
+                  href="{{ url_for('cashin') }}"
+                  class="flex items-center space-x-3 w-full text-left"
+                >
+                  <img
+                    alt="Icon"
+                    class="w-6 h-6 flex-shrink-0"
+                    src="https://storage.googleapis.com/a1aa/image/6a52e529-f20f-4b05-c705-59acd0d4d168.jpg"
+                  />
+                  <span class="text-gray-700 text-sm font-medium">
+                    Over-the-Counter
+                  </span>
+                </a>
+              </button>
+            </li>
+            <li>
+              <button
+                class="flex items-center space-x-3 w-full text-left"
+                type="button"
+              >
+                <img
+                  alt="Icon representing Local Banks cash in"
+                  class="w-6 h-6 flex-shrink-0"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/edc42b28-2e8b-4b21-f649-d5da3235ab07.jpg"
+                  width="24"
+                />
+                <span class="text-gray-900 text-sm font-medium">
+                  Local Banks
+                </span>
+              </button>
+            </li>
+            <li>
+              <button
+                class="flex items-center space-x-3 w-full text-left"
+                type="button"
+              >
+                <img
+                  alt="Icon representing Global Banks and Partners cash in"
+                  class="w-6 h-6 flex-shrink-0"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/bf922a3e-a7e0-4d43-638c-2f3e935f47ef.jpg"
+                  width="24"
+                />
+                <span class="text-gray-900 text-sm font-medium">
+                  Global Banks and Partners
+                </span>
+              </button>
+            </li>
+          </ul>
+        </section>
+        <!-- Recent Partners (partial visible) -->
+        <div class="px-4 pt-4">
+          <div class="flex justify-between items-center">
+            <h3 class="text-[#1E6EF2] font-semibold text-sm">
+              Recent Partners
+            </h3>
+           
+          </div>
+          <p class="text-gray-400 text-xs mb-4">
+            Cash in through our partner banks’ websites or apps.
+          </p>
+          <ul class="space-y-5">
+            <li class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <img
+                  alt="AUB bank logo with red and orange colors"
+                  class="w-6 h-6 object-contain"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/e4080f3c-20ce-49f9-8996-f8c23fd832f3.jpg"
+                  width="24"
+                />
+                <span class="text-xs font-semibold text-gray-900"> AUB </span>
+              </div>
+              <button aria-label="Favorite AUB" class="text-[#007AFF] text-xl">
+                <i class="far fa-heart"> </i>
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <img
+                  alt="Bank of China logo with red and black text"
+                  class="w-6 h-6 object-contain"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/bedc66bd-fb04-4010-c519-f1e10dc18d72.jpg"
+                  width="24"
+                />
+                <span class="text-xs font-semibold text-gray-900">
+                  Bank of China
+                </span>
+              </div>
+              <button
+                aria-label="Favorite Bank of China"
+                class="text-[#007AFF] text-xl"
+              >
+                <i class="far fa-heart"> </i>
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <img
+                  alt="Bank of Commerce logo with blue and yellow emblem"
+                  class="w-6 h-6 object-contain"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/7c4cc57d-63cf-4530-9c8c-54874096eefb.jpg"
+                  width="24"
+                />
+                <span class="text-xs font-semibold text-gray-900">
+                  Bank of Commerce
+                </span>
+              </div>
+              <button
+                aria-label="Favorite Bank of Commerce"
+                class="text-[#007AFF] text-xl"
+              >
+                <i class="far fa-heart"> </i>
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <img
+                  alt="BDO bank logo with blue and yellow colors"
+                  class="w-6 h-6 object-contain"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/41ce49e5-65cf-485e-2349-bee34aac1731.jpg"
+                  width="24"
+                />
+                <span class="text-xs font-semibold text-gray-900"> BDO </span>
+              </div>
+              <button aria-label="Favorite BDO" class="text-[#007AFF] text-xl">
+                <i class="far fa-heart"> </i>
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <img
+                  alt="China Bank logo with red text"
+                  class="w-6 h-6 object-contain"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/6785865d-85c9-4dba-1a1a-78c98eb2791e.jpg"
+                  width="24"
+                />
+                <span class="text-xs font-semibold text-gray-900">
+                  China Bank
+                </span>
+              </div>
+              <button
+                aria-label="Favorite China Bank"
+                class="text-[#007AFF] text-xl"
+              >
+                <i class="far fa-heart"> </i>
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <img
+                  alt="EastWest Bank logo with purple diamond icon"
+                  class="w-6 h-6 object-contain"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/f5e9216f-8727-46d9-a1e5-8b21de205887.jpg"
+                  width="24"
+                />
+                <span class="text-xs font-semibold text-gray-900">
+                  EastWest Bank
+                </span>
+              </div>
+              <button
+                aria-label="Favorite EastWest Bank"
+                class="text-[#007AFF] text-xl"
+              >
+                <i class="far fa-heart"> </i>
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <img
+                  alt="HSBC bank logo with red hexagon"
+                  class="w-6 h-6 object-contain"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/e05dac36-3e23-450f-b647-ff661bb9c74d.jpg"
+                  width="24"
+                />
+                <span class="text-xs font-semibold text-gray-900"> HSBC </span>
+              </div>
+              <button aria-label="Favorite HSBC" class="text-[#007AFF] text-xl">
+                <i class="far fa-heart"> </i>
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <img
+                  alt="LandBank logo with green circle and text"
+                  class="w-6 h-6 object-contain"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/48d20bc3-9f5f-4096-cf53-682eead79de3.jpg"
+                  width="24"
+                />
+                <span class="text-xs font-semibold text-gray-900">
+                  LandBank
+                </span>
+              </div>
+              <button
+                aria-label="Favorite LandBank"
+                class="text-[#007AFF] text-xl"
+              >
+                <i class="far fa-heart"> </i>
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <img
+                  alt="Maybank logo with yellow and black colors"
+                  class="w-6 h-6 object-contain"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/e0355b93-1596-469e-71b6-bda176a296b6.jpg"
+                  width="24"
+                />
+                <span class="text-xs font-semibold text-gray-900">
+                  Maybank
+                </span>
+              </div>
+              <button
+                aria-label="Favorite Maybank"
+                class="text-[#007AFF] text-xl"
+              >
+                <i class="far fa-heart"> </i>
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <img
+                  alt="Metrobank logo with blue hexagon icon"
+                  class="w-6 h-6 object-contain"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/e0713011-e1f0-4c08-67d4-ca1e84b2ff2d.jpg"
+                  width="24"
+                />
+                <span class="text-xs font-semibold text-gray-900">
+                  Metrobank
+                </span>
+              </div>
+              <button
+                aria-label="Favorite Metrobank"
+                class="text-[#007AFF] text-xl"
+              >
+                <i class="far fa-heart"> </i>
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <img
+                  alt="PBCOM bank logo with red text"
+                  class="w-6 h-6 object-contain"
+                  height="24"
+                  src="https://storage.googleapis.com/a1aa/image/108117da-b5c4-4a06-e1ff-4b977edbf1ba.jpg"
+                  width="24"
+                />
+                <span class="text-xs font-semibold text-gray-900"> PBCOM </span>
+              </div>
+              <button
+                aria-label="Favorite PBCOM"
+                class="text-[#007AFF] text-xl"
+              >
+                <i class="far fa-heart"> </i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </main>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const favorites = new Set();
+        // or load from localStorage for persistence
+
+        document
+          .querySelectorAll("button[aria-label^='Favorite']")
+          .forEach((button) => {
+            button.addEventListener("click", () => {
+              const icon = button.querySelector("i");
+              const bankName = button
+                .getAttribute("aria-label")
+                .replace("Favorite ", "");
+
+              // Toggle favorite
+              if (favorites.has(bankName)) {
+                favorites.delete(bankName);
+                icon.classList.remove("fas");
+                icon.classList.add("far");
+              } else {
+                favorites.add(bankName);
+                icon.classList.remove("far");
+                icon.classList.add("fas");
+              }
+
+              // Optional: Debugging or persistence
+              console.log("Favorites:", [...favorites]);
+              // localStorage.setItem('favorites', JSON.stringify([...favorites]));
+            });
+          });
+      });
+    </script>
+  </body>
+</html>

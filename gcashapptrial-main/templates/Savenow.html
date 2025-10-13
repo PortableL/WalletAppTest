@@ -1,0 +1,83 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Savenow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/1d81ff6997.js" crossorigin="anonymous"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-white h-screen overflow-hidden">
+    <div
+      class="h-full w-full max-w-md mx-auto border border-gray-300 rounded-3xl overflow-hidden shadow-lg flex flex-col"
+    >
+      <!-- Header -->
+      <header class="bg-[#1E6EF2] flex items-center justify-between px-4 py-3">
+        <button aria-label="Back" class="text-white text-lg">
+          <a href="{{ url_for('home') }}"><i class="fas fa-arrow-left"></i></a>
+        </button>
+        <h1 class="text-white font-semibold text-lg">Gsave</h1>
+        <button aria-label="Info" class="text-white text-lg">
+          <i class="fas fa-info-circle"></i>
+        </button>
+      </header>
+      <main class="flex-1 overflow-y-auto bg-white p-4">
+        <!-- Search -->
+        <div
+          class="flex items-center border border-gray-300 rounded-lg px-3 py-2 mb-4"
+        >
+          <i class="fas fa-search text-gray-400 text-base"> </i>
+          <input
+            aria-label="Search"
+            class="flex-grow ml-2 text-gray-700 text-sm placeholder-gray-400 focus:outline-none"
+            placeholder="Search"
+            type="search"
+          />
+          <button aria-label="Filter" class="text-gray-600 text-lg ml-2">
+            <i class="fas fa-sliders-h"> </i>
+          </button>
+        </div>
+        <!-- Hub -->
+        <section class="mb-6">
+          <div class="flex justify-center">
+            <h2 class="text-blue-800 font-semibold text-s">Hub</h2>
+          </div>
+          <div class="flex justify-between items-center">
+            <p class="text-blue-800 font-weight:900 item=center">Partern Banks</p>
+          </div>
+          <p class="text-gray-500 text-xs mb-3">
+            Tap the
+            <i class="fa-solid fa-heart text-gray-400"> </i>
+            to add a Cash In partner to your Favorites.
+          </p>
+          <div class="flex space-x-4">
+            <div
+              class="w-10 h-10 rounded-full border-2 border-dashed border-gray-300"
+            ></div>
+            <div
+              class="w-10 h-10 rounded-full border-2 border-dashed border-gray-300"
+            ></div>
+            <div
+              class="w-10 h-10 rounded-full border-2 border-dashed border-gray-300"
+            ></div>
+            <div
+              class="w-10 h-10 rounded-full border-2 border-dashed border-gray-300"
+            ></div>
+            <div
+              class="w-10 h-10 rounded-full border-2 border-dashed border-gray-300"
+            ></div>
+          </div>
+        </section>
+        
+          </ul>
+        </div>
+      </main>
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cash In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <!-- header -->
+  <body class="bg-white h-screen overflow-hidden">
+    <div
+      class="h-full w-full max-w-md mx-auto border border-gray-300 rounded-3xl overflow-hidden shadow-lg flex flex-col"
+    >
+      <header class="bg-[#1E6EF2] flex items-center justify-between px-4 py-3">
+        <button aria-label="Back" class="text-white text-lg">
+          <a href="{{ url_for('cashin_options') }}"
+            ><i class="fas fa-arrow-left"></i
+          ></a>
+        </button>
+        <h1 class="text-white font-semibold text-lg">Cash in</h1>
+        <button arial-label="Info" class="text-white text-lg">
+          <i class="fas fa-info-circle"></i>
+        </button>
+      </header>
+      <main class="flex-1 overflow-y-auto bg-white p-4">
+        <form
+          action="{{ url_for('cashin') }}"
+          method="post"
+          class="bg-white p-6 rounded shadow-md space-y-4"
+        >
+          <h2 class="text-lg font-semibold text-center">Over-the-counter</h2>
+          <input
+            type="number"
+            name="amount"
+            step="0.01"
+            required
+            placeholder="Enter amount"
+            class="border rounded text-center px-3 py-2 w-full"
+          />
+          <button
+            type="submit"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Confirm
+          </button>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>
