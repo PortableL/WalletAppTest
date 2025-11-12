@@ -85,7 +85,7 @@
             </button>
           </div>
           <!-- Wallet balance and cash in --><!--Wallet Content-->
-          <div id="wallet-content" class="">
+          <div id="wallet-content">
             <div
               class="bg-[#0052ff] text-white px-5 py-4 flex justify-between items-center rounded-b-xl"
             >
@@ -213,9 +213,7 @@
                 class="bg-white text-[#0052ff] text-sm font-semibold rounded-md px-4 py-1 select-none"
                 type="button"
               >
-              <a href="{{ url_for('save_now') }}">
-                Save Now!
-               </a>
+                <a href="{{ url_for('save_now') }}"> Save Now! </a>
               </button>
             </div>
           </div>
@@ -250,75 +248,75 @@
           </div>
           <!-- Borrow icons (hidden by default) -->
           <div
-    id="icons-borrow"
-    class="hidden grid grid-cols-3 gap-4 text-center mt-6"
-  >
-    <div
-      class="flex flex-col items-center p-3 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95 cursor-pointer transition] cursor-pointer transition"
-    >
-      <div class="bg-blue-100 p-4 rounded-full">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="#1d4ed8"
-          class="w-8 h-8"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.375 10.5H5.25L4.5 10.5h15l-.75 10.5zM10.125 15a.375.375 0 11-.75 0 .375.375 0 01.75 0zm3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-          />
-        </svg>
-      </div>
-      <p class="text-sm mt-2 font-medium text-black">G-Gives</p>
-    </div>
+            id="icons-borrow"
+            class="hidden grid grid-cols-3 gap-4 text-center mt-6"
+          >
+            <div
+              class="flex flex-col items-center p-3 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95 cursor-pointer transition] cursor-pointer transition"
+            >
+              <div class="bg-blue-100 p-4 rounded-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="#1d4ed8"
+                  class="w-8 h-8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.375 10.5H5.25L4.5 10.5h15l-.75 10.5zM10.125 15a.375.375 0 11-.75 0 .375.375 0 01.75 0zm3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                  />
+                </svg>
+              </div>
+              <p class="text-sm mt-2 font-medium text-black">G-Gives</p>
+            </div>
 
-    <div
-      class="flex flex-col items-center p-3 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95 cursor-pointer transition"
-    >
-      <div class="bg-green-100 p-4 rounded-full">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="#16a34a"
-          class="w-8 h-8"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.086.823.25 1.226l-.25.865a2.25 2.25 0 01-2.246 2.246H5.25a2.25 2.25 0 01-2.246-2.246l-.25-.865A48.455 48.455 0 013 6.108c0-.231.035-.454.1-.664m5.801 0A48.297 48.297 0 0112 4.5c4.634 0 8.943.89 12.75 2.54 1.131.398 2.535-1.127 1.258-2.246A48.297 48.297 0 0112 2.25C7.366 2.25 3.057 3.14 0 4.795c-1.277 1.12-1.13 2.644.258 2.246A48.455 48.455 0 016.101 5.4c.065-.21.1-.433.1-.664m5.801 0a1 1 0 011 1v.664a1 1 0 01-1 1h-.664a1 1 0 01-1-1v-.664a1 1 0 011-1h.664z"
-          />
-        </svg>
-      </div>
-      <p class="text-sm mt-2 font-medium text-black">G-Loan</p>
-    </div>
+            <div
+              class="flex flex-col items-center p-3 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95 cursor-pointer transition"
+            >
+              <div class="bg-green-100 p-4 rounded-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="#16a34a"
+                  class="w-8 h-8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.086.823.25 1.226l-.25.865a2.25 2.25 0 01-2.246 2.246H5.25a2.25 2.25 0 01-2.246-2.246l-.25-.865A48.455 48.455 0 013 6.108c0-.231.035-.454.1-.664m5.801 0A48.297 48.297 0 0112 4.5c4.634 0 8.943.89 12.75 2.54 1.131.398 2.535-1.127 1.258-2.246A48.297 48.297 0 0112 2.25C7.366 2.25 3.057 3.14 0 4.795c-1.277 1.12-1.13 2.644.258 2.246A48.455 48.455 0 016.101 5.4c.065-.21.1-.433.1-.664m5.801 0a1 1 0 011 1v.664a1 1 0 01-1 1h-.664a1 1 0 01-1-1v-.664a1 1 0 011-1h.664z"
+                  />
+                </svg>
+              </div>
+              <p class="text-sm mt-2 font-medium text-black">G-Loan</p>
+            </div>
 
-    <div
-      class="flex flex-col items-center p-3 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95 cursor-pointer transition cursor-pointer transition"
-    >
-      <div class="bg-yellow-100 p-4 rounded-full">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="#ca8a04"
-          class="w-8 h-8"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h6M3.75 16.5h.008v.008H3.75v-.008zM3.75 19.5h.008v.008H3.75v-.008zm.75-5.25h.008v.008H4.5v-.008zm.75 2.25h.008v.008H5.25v-.008zM7.5 16.5h.008v.008H7.5v-.008zm.75 2.25h.008v.008H8.25v-.008zM10.5 16.5h.008v.008H10.5v-.008zm.75 2.25h.008v.008H11.25v-.008zM13.5 16.5h.008v.008H13.5v-.008zm.75 2.25h.008v.008H14.25v-.008zM16.5 16.5h.008v.008H16.5v-.008zm.75 2.25h.008v.008H17.25v-.008zM6 4.5h12a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6.75A2.25 2.25 0 016 4.5z"
-          />
-        </svg>
-      </div>
-      <p class="text-sm mt-2 font-medium text-black">G-Credit</p>
-    </div>
-</div>
+            <div
+              class="flex flex-col items-center p-3 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95 cursor-pointer transition cursor-pointer transition"
+            >
+              <div class="bg-yellow-100 p-4 rounded-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="#ca8a04"
+                  class="w-8 h-8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h6M3.75 16.5h.008v.008H3.75v-.008zM3.75 19.5h.008v.008H3.75v-.008zm.75-5.25h.008v.008H4.5v-.008zm.75 2.25h.008v.008H5.25v-.008zM7.5 16.5h.008v.008H7.5v-.008zm.75 2.25h.008v.008H8.25v-.008zM10.5 16.5h.008v.008H10.5v-.008zm.75 2.25h.008v.008H11.25v-.008zM13.5 16.5h.008v.008H13.5v-.008zm.75 2.25h.008v.008H14.25v-.008zM16.5 16.5h.008v.008H16.5v-.008zm.75 2.25h.008v.008H17.25v-.008zM6 4.5h12a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6.75A2.25 2.25 0 016 4.5z"
+                  />
+                </svg>
+              </div>
+              <p class="text-sm mt-2 font-medium text-black">G-Credit</p>
+            </div>
+          </div>
 
           <!--- Grow -->
           <div id="grow-content" class="hidden">
