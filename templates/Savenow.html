@@ -11,6 +11,7 @@
         font-family: "Inter", sans-serif;
       }
     </style>
+    <script src="/static/gsavescript.js"></script>
   </head>
   <body class="bg-white h-screen overflow-hidden">
       <div
@@ -45,15 +46,18 @@
         <!-- Gsave Section -->
 
       <section class="mb-6">
-           <!-- Tab Header -->
+           <!-- Tab Button Header -->
           <div class="flex justify-around px-8 border-gray-300">
-            <button id="tab-savings" class="tab text-blue-800 font-semibold text-sm px-4 py-2 border-b-2 border-blue-800">
+            <button id="tab-hub" class="tab w-1/2 text-blue-800 font-semibold text-sm px-4 py-2 border-b-2 border-blue-800 text-center">
               Hub
             </button>
-            <button id="tab-hub" class="tab text-blue-800 font-semibold text-sm px-4 py-2 border-b-2 border-transparent hover:border-blue-800">
+            <button id="tab-savings" class="tab w-1/2 text-blue-800 font-semibold text-sm px-4 py-2 border-b-2 border-transparent text-center">
                  My Savings
             </button>
           </div>
+
+          
+
 
 
             <!-- Hub Content -->
@@ -96,8 +100,16 @@
               </button>
             </div>
 
-            <div id="mysavings-content"></div>
-              <div class=""></div>
+            <!--Savings content-->
+              <div id="mysavings-content" class="hidden">
+              <div class="big-white text-blue-800 py-4 font-extrabold">
+              Personal Savings
+              </div>
+              <p>Your savings amount is displayed here</p>
+              </div>
+
+              
         </section>
+        
   </body>
 </html>
