@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/static/signup.css" />
+  </head>
+
+  <body>
+    <section>
+      <div class="signup-container">
+        <h2>Create Account</h2>
+        <form action="/signup" method="POST" id="signupForm">
+          <div class="form-group">
+            <label for="fullname">Full Name</label>
+            <input
+              type="text"
+              id="fullname"
+              name="fullname"
+              placeholder="Enter your full name"
+              required
+            />
+            <span class="error-message" id="nameError"
+              >Please enter a valid name</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+            />
+            <span class="error-message" id="emailError"
+              >Please enter a valid email</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Choose a username"
+              required
+            />
+            <span class="error-message" id="usernameError"
+              >Username must be at least 3 characters</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Create a password"
+              required
+            />
+            <div class="password-strength" id="passwordStrength">
+              <div class="password-strength-bar" id="strengthBar"></div>
+            </div>
+            <span class="error-message" id="passwordError"
+              >Password must be at least 6 characters</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirm_password"
+              placeholder="Confirm your password"
+              required
+            />
+            <span class="error-message" id="confirmError"
+              >Passwords do not match</span
+            >
+          </div>
+
+          <button type="submit" class="btn-signup">Sign Up</button>
+        </form>
+
+        <div class="login-link">
+          Already have an account? <a href="/login">Login here</a>
+        </div>
+      </div>
+    </section>
+    <script>
+      const form = document.getElementById('signupForm');
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirm-password');
+      const strengthBar = document.getElementById('strengthBar');
+      const passwordStrength = document.getElementById('passwordStrength');
+
+      // Password strength indicator
+      password.addEventListener('input', function () {
+        const value = this.value;
+        passwordStrength.style.display = value ? 'block' : 'none';
+
+        let strength = 0;
+        if (value.length >= 6) strength++;
+        if (value.length >= 10) strength++;
+        if (/[A-Z]/.test(value) && /[a-z]/.test(value)) strength++;
+        if (/[0-9]/.test(value)) strength++;
+        if (/[^A-Za-z0-9]/.test(value)) strength++;
+
+        strengthBar.className = 'password-strength-bar';
+        if (strength <= 2) {
+          strengthBar.classList.add('strength-weak');
+        } else if (strength <= 4) {
+          strengthBar.classList.add('strength-medium');
+        } else {
+          strengthBar.classList.add('strength-strong');
+        }
+      });
+
+      // Form validation
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        let isValid = true;
+
+        // Reset errors
+        document
+          .querySelectorAll('.error-message')
+          .forEach((el) => (el.style.display = 'none'));
+
+        // Validate password
+        if (password.value.length < 6) {
+          document.getElementById('passwordError').style.display = 'block';
+          isValid = false;
+        }
+
+        // Validate confirm password
+        if (password.value !== confirmPassword.value) {
+          document.getElementById('confirmError').style.display = 'block';
+          isValid = false;
+        }
+
+        // Validate username
+        if (document.getElementById('username').value.length < 3) {
+          document.getElementById('usernameError').style.display = 'block';
+          isValid = false;
+        }
+
+        if (isValid) {
+          form.submit();
+        }
+      });
+    </script>
+  </body>
+</html>
