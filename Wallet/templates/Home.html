@@ -23,14 +23,6 @@
     <div
       class="h-screen w-full max-w-md mx-auto border border-gray-300 rpounded-3xl shadow-lg flex flex-col justify-between"
     >
-      {% with messages = get_flashed_messages(with_categories=true) %} {% if
-      messages %} {% for category, message in messages %}
-      <div
-        class="flash {{ category }} bg-green-100 text-green-800 p-2 rounded mb-4 text-center"
-      >
-        {{ message }}
-      </div>
-      {% endfor %} {% endif %} {% endwith %}
       <div
         class="px-4 pt-6 pb-4 relative max-w-md mx-auto w-full overflow-y-auto:hidden"
       >
