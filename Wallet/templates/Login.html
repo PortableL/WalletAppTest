@@ -22,13 +22,21 @@
   </head>
 
   <body>
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
     <section>
       <div class="login-box">
         <form action="/login" method="POST">
           <h2>Login</h2>
 
           <div class="input-box">
-            <input type="email" name="username" required />
+            <input type="email" name="email" required />
             <label for="email">Email Address</label>
             <span class="icon"><i data-lucide="mail"></i></span>
           </div>
@@ -58,6 +66,18 @@
 
     <script>
       lucide.createIcons(); // Required to render
+    </script>
+    <script>
+      lucide.createIcons();
+
+      // Auto-hide flash messages after 5 seconds
+      setTimeout(() => {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach((alert) => {
+          alert.style.animation = 'slideIn 0.3s ease-out reverse';
+          setTimeout(() => alert.remove(), 300);
+        });
+      }, 5000);
     </script>
   </body>
 </html>

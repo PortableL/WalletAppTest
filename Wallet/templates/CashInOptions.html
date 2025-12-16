@@ -9,9 +9,9 @@
       rel="stylesheet"
     />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
       body {
-        font-family: "Inter", sans-serif;
+        font-family: 'Inter', sans-serif;
       }
     </style>
   </head>
@@ -22,7 +22,9 @@
       <!-- Header -->
       <header class="bg-[#1E6EF2] flex items-center justify-between px-4 py-3">
         <button aria-label="Back" class="text-white text-lg">
-          <a href="{{ url_for('home') }}"><i class="fas fa-arrow-left"></i></a>
+          <a href="{{ url_for('auth.home') }}"
+            ><i class="fas fa-arrow-left"></i
+          ></a>
         </button>
         <h1 class="text-white font-semibold text-lg">Cash In</h1>
         <button aria-label="Info" class="text-white text-lg">
@@ -86,7 +88,7 @@
                 type="button"
               >
                 <a
-                  href="{{ url_for('cashin') }}"
+                  href="{{ url_for('auth.cashin') }}"
                   class="flex items-center space-x-3 w-full text-left"
                 >
                   <img
@@ -142,7 +144,6 @@
             <h3 class="text-[#1E6EF2] font-semibold text-sm">
               Recent Partners
             </h3>
-           
           </div>
           <p class="text-gray-400 text-xs mb-4">
             Cash in through our partner banks’ websites or apps.
@@ -356,32 +357,32 @@
       </main>
     </div>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
+      document.addEventListener('DOMContentLoaded', () => {
         const favorites = new Set();
         // or load from localStorage for persistence
 
         document
           .querySelectorAll("button[aria-label^='Favorite']")
           .forEach((button) => {
-            button.addEventListener("click", () => {
-              const icon = button.querySelector("i");
+            button.addEventListener('click', () => {
+              const icon = button.querySelector('i');
               const bankName = button
-                .getAttribute("aria-label")
-                .replace("Favorite ", "");
+                .getAttribute('aria-label')
+                .replace('Favorite ', '');
 
               // Toggle favorite
               if (favorites.has(bankName)) {
                 favorites.delete(bankName);
-                icon.classList.remove("fas");
-                icon.classList.add("far");
+                icon.classList.remove('fas');
+                icon.classList.add('far');
               } else {
                 favorites.add(bankName);
-                icon.classList.remove("far");
-                icon.classList.add("fas");
+                icon.classList.remove('far');
+                icon.classList.add('fas');
               }
 
               // Optional: Debugging or persistence
-              console.log("Favorites:", [...favorites]);
+              console.log('Favorites:', [...favorites]);
               // localStorage.setItem('favorites', JSON.stringify([...favorites]));
             });
           });

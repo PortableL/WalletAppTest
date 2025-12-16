@@ -105,7 +105,7 @@ h2 {
 
 .remember-forgot a {
   position: relative;
-  color: rgb(6, 0, 12);
+  color: #f7f7fade;
   text-decoration: none;
 }
 
@@ -136,7 +136,7 @@ button {
   border-radius: 25px;
   cursor: pointer;
   font-size: 1em;
-  color: #021d97f1;
+  color: #1307b6de;
   font-weight: 500;
   margin: 15px 0 10px;
 }
@@ -145,14 +145,15 @@ button {
   font-size: 0.9em;
   color: #fff;
   text-align: center;
-  margin: 5px 0 10px;
+  margin: 10px 0 10px;
 }
 
 .register-link p a {
-  color: #0a0001de;
+  color: #71d9f3f6;
   text-decoration: none;
   font-weight: 600;
   position: relative;
+  margin: 0 0 0 2px;
 }
 
 .register-link p a::after {
@@ -168,6 +169,48 @@ button {
 
 .register-link p a:hover::after {
   width: 100%;
+}
+
+.flash-messages {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  max-width: 350px;
+}
+.alert {
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out;
+}
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+.alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+.alert-info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 input,
