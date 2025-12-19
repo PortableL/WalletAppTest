@@ -610,12 +610,13 @@
         </button>
 
         <!-- Profile -->
-        <button
-          class="flex flex-col items-center text-gray-700 hover:text-blue-700 active:font-extrabold transition-all duration-200 transition-transform duration-200 ease-out hover:scale-110 active:scale-95"
+        <a
+          href="{{ url_for('auth.profile') }}"
+          class="flex flex-col items-center text-gray-700 hover:text-blue-700 active:font-extrabold transition-all duration-200 transition-transform ease-out hover:scale-110 active:scale-95"
         >
           <i class="far fa-user-circle text-xl"></i>
           <span class="text-xs mt-1">Profile</span>
-        </button>
+        </a>
       </nav>
     </div>
   </body>

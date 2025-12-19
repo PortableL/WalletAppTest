@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request,url_for , redirect, request, flash
-from flask_login import login_user, login_required, logout_user, current_user, login_input
+from flask_login import login_user, login_required, logout_user, current_user
 from .models import User
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -13,15 +13,14 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+
+    
     data = request.form
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
 
-        user = User.query.filter(
-                (User.email == login_input) | (User.username == login_input)
-                ).first()
-
+        user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
                 flash('Log in successfully!', category='success')
@@ -34,13 +33,6 @@ def login():
     
     print(data)
     return render_template('Login.html')
-
-@auth.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    flash('Logged out successfully!', category='success')
-    return redirect(url_for('auth.login'))
 
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
@@ -101,6 +93,11 @@ def home():
 def cashin_options():
     return render_template('CashInOptions.html')
 
+@auth.route('/profile')
+@login_required
+def profile():
+    return render_template('Profile.html')
+
 # to add cash in value
 @auth.route('/cashin', methods=['GET', 'POST'])
 @login_required
@@ -121,3 +118,20 @@ def cashin():
 @login_required
 def save_now():
     return render_template('Savenow.html')
+
+
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user #log out user(Flask-Login)
+
+    #Clear session data completely
+    from flask import session
+    session.clear()
+
+    wallet_balance["balance"] = 0.00
+
+    flash('Logged out successfully!', category='success')
+
+    return redirect(url_for('auth.login'))
+
