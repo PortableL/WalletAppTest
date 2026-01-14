@@ -1,15 +1,22 @@
-from flask import Blueprint, render_template, request,url_for , redirect, request, flash
+from flask import Blueprint, render_template,url_for , redirect, request, flash
 from flask_login import login_user, login_required, logout_user, current_user
-from .models import User
-from . import db
+from ..models.user import User
+from ..extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
 
-wallet_balance = {"balance": 0.00}
-
-
 auth = Blueprint('auth', __name__)
+
+
+
+
+@auth.route('/')
+def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('wallet.home'))
+    return redirect(url_for('auth.login'))
+
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -25,18 +32,23 @@ def login():
             if check_password_hash(user.password, password):
                 flash('Log in successfully!', category='success')
                 login_user(user, remember=True)
-                return redirect(url_for('auth.home'))
+                return redirect(url_for('wallet.home'))
             else:
                 flash('Incorrect password, try again.', category='error')    
         else:
             flash('Email does not exist.', category='error')             
     
     print(data)
-    return render_template('Login.html')
+    return render_template('auth/Login.html')
 
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
+    # Redirect if already logged in
+    if current_user.is_authenticated:
+            return redirect(url_for('wallet.home'))
+
+
     if request.method == "POST":
         email = request.form.get('email')
         fullname = request.form.get('fullname', '')
@@ -63,75 +75,69 @@ def sign_up():
         elif len(password1) < 7:
             flash('Password must be at least 7 characters.', category='error')
         else:
-            # Check if user already exists (very basic check)
-            user = User.query.filter_by(email=email).first()
-            if user:
+            # Check if email already exists 
+            existing_user = User.query.filter_by(email=email).first()
+            if existing_user:
                 flash('Email already exists.', category='error')
-            else:
-                # Create a new user (Make sure you have a User model that accepts these parameters)
-                new_user = User(email=email, fullname =fullname, username=username, password=generate_password_hash(password1, method='pbkdf2:sha256'))
-                  # You'll need to hash the password first
+                return redirect(url_for('auth.sign_up'))
+            
+            # Check if username already exists
+            existing_username = User.query.filter_by(username=username).first()
+            if existing_username:
+                flash('Username already taken.', category='error')
+                return redirect(url_for('auth.sign_up'))
+            
+            try:
+                # Create new user
+                new_user = User(
+                    email=email,
+                    fullname=fullname,
+                    username=username,
+                    password=generate_password_hash(password1, method='pbkdf2:sha256')
+                )
                 db.session.add(new_user)
                 db.session.commit()
+                
+                # Log in the new user
                 login_user(new_user, remember=True)
-                flash('Account created!', category='success')
-                return redirect(url_for('auth.home'))  # Redirect to the login page after successful sign up
+                flash('Account created successfully!', category='success')
+                return redirect(url_for('wallet.home'))  # ✅ Fixed redirect
+                
+            except Exception as e:
+                db.session.rollback()
+                flash('An error occurred while creating your account.', category='error')
+                print(f"Sign-up error: {e}")  # For debugging
 
 
 
-    return render_template('Signup.html')
+    return render_template('auth/Signup.html')
 
 
-@auth.route('/home')
-@login_required
-def home():
-    return render_template('Home.html', balance=wallet_balance["balance"])
-
-# cash in options
-@auth.route('/cashin-options')
-@login_required
-def cashin_options():
-    return render_template('CashInOptions.html')
 
 @auth.route('/profile')
 @login_required
 def profile():
-    return render_template('Profile.html')
+    return render_template('auth/Profile.html')
 
-# to add cash in value
-@auth.route('/cashin', methods=['GET', 'POST'])
-@login_required
-def cashin():
-    if request.method == 'POST':
-        try:
-            amount = float(request.form['amount'])
-            if amount <= 0:
-                raise ValueError("Invalid amount")
-            wallet_balance['balance'] += amount
-            return redirect(url_for('auth.home'))
-        except:
-            return "Invalid input", 400
-    return render_template('Cashin.html')
 
-# Savenow button
-@auth.route('/save-now')
-@login_required
-def save_now():
-    return render_template('Savenow.html')
 
 
 @auth.route('/logout')
 @login_required
 def logout():
-    logout_user #log out user(Flask-Login)
-
-    #Clear session data completely
+    logout_user()  # Log out user (Flask-Login)
+    
+    # Clear session data completely
     from flask import session
     session.clear()
-
-    wallet_balance["balance"] = 0.00
-
+    
     flash('Logged out successfully!', category='success')
-
-    return redirect(url_for('auth.login'))
+    
+    # Create response with no-cache headers
+    response = redirect(url_for('auth.login'))
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    
+    return response
 

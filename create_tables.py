@@ -1,4 +1,4 @@
-from Wallet import create_app, db
+from Wallet.routes import create_app, db
 
 app = create_app()
 

@@ -1,3 +1,6 @@
+{% extends "base_protected.html" %} {% block content %}
+<!-- Your existing home content -->
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -118,13 +121,13 @@
                   class="mt-1 flex items-center space-x-1 font-semibold text-3xl select-none"
                 >
                   <span class="text-3xl font-extrabold"> ₱ </span>
-                  <span> {{ '%.2f' | format(balance) }} </span>
+                  <span> {{ '%.2f' | format(wallet.balance) }} </span>
                 </div>
               </div>
               <div class="mt-4">
                 <button class="px-2.5 py-1 select-none" type="button">
                   <a
-                    href="{{ url_for('auth.cashin_options') }}"
+                    href="{{ url_for('wallet.cashin_options') }}"
                     class="inline-block bg-sky-200 text-[#0052ff] text-sm font-semibold rounded-full px-[12px] py-[3px] select-none border border-[#0052ff]"
                   >
                     + Cash In
@@ -213,7 +216,7 @@
                 class="bg-white text-[#0052ff] text-sm font-semibold rounded-md px-4 py-1 select-none"
                 type="button"
               >
-                <a href="{{ url_for('auth.save_now') }}"> Save Now! </a>
+                <a href="{{ url_for('savings.save_now') }}"> Save Now! </a>
               </button>
             </div>
           </div>
@@ -386,7 +389,7 @@
                   src="https://storage.googleapis.com/a1aa/image/722a9229-fb53-4134-f0f4-3cfbdb86bff7.jpg"
                   width="32"
                 />
-                <span> Load </span>
+                <span> Inventory </span>
               </div>
               <div class="flex flex-col items-center space-y-1">
                 <img
@@ -621,3 +624,4 @@
     </div>
   </body>
 </html>
+{% endblock %}
