@@ -3,7 +3,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from ..models.user import User
 from ..extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask import session
 
 
 auth = Blueprint('auth', __name__)
@@ -31,12 +31,15 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 flash('Log in successfully!', category='success')
-                login_user(user, remember=True)
+                login_user(user, remember=False)
+                session.permanent = True
                 return redirect(url_for('wallet.home'))
             else:
                 flash('Incorrect password, try again.', category='error')    
         else:
-            flash('Email does not exist.', category='error')             
+            flash('Email does not exist.', category='error')      
+
+       
     
     print(data)
     return render_template('auth/Login.html')
@@ -99,7 +102,8 @@ def sign_up():
                 db.session.commit()
                 
                 # Log in the new user
-                login_user(new_user, remember=True)
+                login_user(new_user, remember=False)
+                session.permanent = True
                 flash('Account created successfully!', category='success')
                 return redirect(url_for('wallet.home'))  # ✅ Fixed redirect
                 

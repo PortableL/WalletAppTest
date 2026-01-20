@@ -1,7 +1,7 @@
 from flask import Flask
 import os
 from ..extensions import db, migrate, login_manager
-
+from datetime import timedelta
 
 def create_app():
     
@@ -24,6 +24,7 @@ def create_app():
         "pool_pre_ping": True,
     }
 
+    app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=2)   
     # Initialize extensions
     db.init_app(app)
     migrate.init_app(app, db)

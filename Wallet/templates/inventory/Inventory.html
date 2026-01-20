@@ -1,0 +1,384 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/Wallet/static/inventory.css" />
+    <link rel="stylesheet" href="/Wallet/static/availableitems.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <div class="logo-icon"></div>
+          <span class="logo-text">INVENTORY</span>
+        </div>
+
+        <ul class="nav-menu" id="button-nav-menu">
+          <li class="nav-item">
+            <button class="nav-link" id="homeBtn">
+              <i class="fi fi-rr-house-window nav-icon"></i>
+              <span>Home</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" id="categoryBtn">
+              <i class="fi fi-rr-layout-fluid nav-icon"></i>
+              <span>Category</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" id="availableItemsBtn">
+              <i class="fi fi-rr-box nav-icon"></i>
+              <span>Available Items</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" id="addItemsBtn">
+              <i class="fi fi-rr-truck-side nav-icon"></i>
+              <span>Add Items</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" id="cancelledItemsBtn">
+              <i class="fi fi-rr-box nav-icon"></i>
+              <span>Cancelled Items</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" id="transactionHistoryBtn">
+              <i class="fi fi-rr-user nav-icon"></i>
+              <span>Transaction History</span>
+            </button>
+          </li>
+        </ul>
+
+        <ul class="nav-menu-bottom">
+          <li class="nav-item">
+            <button class="nav-link" id="settingsBtn">
+              <i class="fi fi-rr-settings nav-icon"></i>
+              <span>Settings</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" id="logoutBtn">
+              <i class="fi fi-rr-sign-out-alt nav-icon"></i>
+              <span>Log out</span>
+            </button>
+          </li>
+        </ul>
+      </aside>
+
+      <main class="main-content">
+        <div id="homeContent" class="content-section">
+          <h1 class="page-title">Home</h1>
+          <p>Welcome to your inventory dashboard!</p>
+        </div>
+
+        <div id="categoryContent" class="content-section" style="display: none">
+          <h1 class="page-title">Category</h1>
+          <p>Manage your item categories here.</p>
+        </div>
+
+        <!--Available Items-->
+        <div
+          id="availableItemsContent"
+          class="content-section"
+          style="display: none"
+        >
+          <div class="section-header">
+            <h1 class="page-title">Available Items</h1>
+          </div>
+
+          <!-- Filters Section -->
+          <div class="filters-container">
+            <div class="filter-group">
+              <div class="search-box">
+                <i class="fi fi-rr-search search-icon"></i>
+                <input type="text" id="itemSearch" placeholder="Search" />
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">Status</label>
+              <select class="filter-select" id="statusFilter">
+                <option value="all">All</option>
+                <option value="In Stock">In Stock</option>
+                <option value="Low Stock">Low Stock</option>
+                <option value="Out of Stock">Out of Stock</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="categoryFilter" class="filter-label">Category</label>
+              <select id="categoryFilter" class="filter-select">
+                <option value="all">All</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Office Supplies">Office Supplies</option>
+                <option value="Food & Beverage">Food & Beverage</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Items Table -->
+          <div class="table-container">
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>
+                    <input type="checkbox" id="selectAll" />
+                  </th>
+                  <th class="col-item-no">Item No.</th>
+                  <th class="col-product-name">Product Name</th>
+                  <th class="col-other-names">Other Names</th>
+                  <th class="col-status">Status</th>
+                  <th class="col-availability">No. Availability</th>
+                  <th class="col-notes">Notes</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody id="itemsTableBody">
+                <!--Row 1-->
+                <tr class="table-row">
+                  <td><input type="checkbox" /></td>
+                  <td class="item-id">ITEM-3066</td>
+                  <td>
+                    <div class="item-info">
+                      <div class="item-avatar" style="background: #10b981">
+                        DR
+                      </div>
+                      <div>
+                        <div class="item-name">Dell Laptop XPS 15</div>
+                        <div class="item-supplier">tech@supplier.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Electronics</td>
+                  <td>
+                    <span class="status-badge status-paid">In Stock</span>
+                  </td>
+                  <td class="quantity">45</td>
+                  <td class="price">$1,299.99</td>
+                  <td><button class="action-btn">›</button></td>
+                </tr>
+
+                <tr class="table-row">
+                  <td><input type="checkbox" /></td>
+                  <td class="item-id">ITEM-3065</td>
+                  <td>
+                    <div class="item-info">
+                      <div class="item-avatar" style="background: #f59e0b">
+                        OC
+                      </div>
+                      <div>
+                        <div class="item-name">Office Chair Ergonomic</div>
+                        <div class="item-supplier">furniture@supply.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Furniture</td>
+                  <td>
+                    <span class="status-badge status-paid">In Stock</span>
+                  </td>
+                  <td class="quantity">28</td>
+                  <td class="price">$349.00</td>
+                  <td><button class="action-btn">›</button></td>
+                </tr>
+
+                <tr class="table-row">
+                  <td><input type="checkbox" /></td>
+                  <td class="item-id">ITEM-3064</td>
+                  <td>
+                    <div class="item-info">
+                      <div class="item-avatar" style="background: #8b5cf6">
+                        LS
+                      </div>
+
+                      <div>
+                        <div class="item-name">Paper Clips Box (500 pcs)</div>
+                        <div class="item-supplier">office@depot.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Office Supplies</td>
+                  <td>
+                    <span class="status-badge status-paid">In Stock</span>
+                  </td>
+                  <td class="quantity">150</td>
+                  <td class="price">$4.99</td>
+                  <td><button class="action-btn">›</button></td>
+                </tr>
+
+                <tr class="table-row">
+                  <td><input type="checkbox" /></td>
+                  <td class="item-id">ITEM-3063</td>
+                  <td>
+                    <div class="item-info">
+                      <div class="item-avatar" style="background: #6366f1">
+                        DW
+                      </div>
+                      <div>
+                        <div class="item-name">Coffee Beans Premium Blend</div>
+                        <div class="item-supplier">bean@brew.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Food & Beverage</td>
+                  <td>
+                    <span class="status-badge status-paid">In Stock</span>
+                  </td>
+                  <td class="quantity">8</td>
+                  <td class="price">$24.99</td>
+                  <td><button class="action-btn">›</button></td>
+                </tr>
+
+                <tr class="table-row">
+                  <td><input type="checkbox" /></td>
+                  <td class="item-id">ITEM-3062</td>
+                  <td>
+                    <div class="item-info">
+                      <div class="item-avatar" style="background: #ec4899">
+                        CW
+                      </div>
+                      <div>
+                        <div class="item-name">HP Printer LaserJet Pro</div>
+                        <div class="item-supplier">tech@supplier.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Electronics</td>
+                  <td>
+                    <span class="status-badge status-refunded"
+                      >Out of Stock</span
+                    >
+                  </td>
+                  <td class="quantity">0</td>
+                  <td class="price">$449.99</td>
+                  <td><button class="action-btn">›</button></td>
+                </tr>
+
+                <tr class="table-row">
+                  <td><input type="checkbox" /></td>
+                  <td class="item-id">ITEM-3061</td>
+                  <td>
+                    <div class="item-info">
+                      <div class="item-avatar" style="background: #14b8a6">
+                        NC
+                      </div>
+                      <div>
+                        <div class="item-name">iPhone 15 Pro Max</div>
+                        <div class="item-supplier">apple@authorized.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Electronics</td>
+                  <td>
+                    <span class="status-badge status-paid">In Stock</span>
+                  </td>
+                  <td class="quantity">22</td>
+                  <td class="price">$1,199.00</td>
+                  <td><button class="action-btn">›</button></td>
+                </tr>
+
+                <tr class="table-row">
+                  <td><input type="checkbox" /></td>
+                  <td class="item-id">ITEM-3060</td>
+                  <td>
+                    <div class="item-info">
+                      <div class="item-avatar" style="background: #f97316">
+                        DC
+                      </div>
+                      <div>
+                        <div class="item-name">
+                          Ballpoint Pens Set (12 pack)
+                        </div>
+                        <div class="item-supplier">stationery@plus.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Office Supplies</td>
+                  <td>
+                    <span class="status-badge status-cancelled"
+                      >Out of Stock</span
+                    >
+                  </td>
+                  <td class="quantity">0</td>
+                  <td class="price">$8.99</td>
+                  <td><button class="action-btn">›</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <button class="pagination-btn" id="prevBtn">‹ Previous</button>
+            <div class="pagination-numbers">
+              <button class="page-number active">1</button>
+              <button class="page-number">2</button>
+              <button class="page-number">3</button>
+              <span class="page-dots">...</span>
+              <button class="page-number">8</button>
+              <button class="page-number">9</button>
+              <button class="page-number">10</button>
+            </div>
+            <button class="pagination-btn" id="nextBtn">Next ›</button>
+          </div>
+        </div>
+
+        <div id="addItemsContent" class="content-section" style="display: none">
+          <h1 class="page-title">Add Items</h1>
+          <p>Add new items to your inventory.</p>
+        </div>
+
+        <!--Add Items-->
+        <div id="addItemsContent" class="content-section" style="display: none">
+          <h1 class="page-title">Add Items</h1>
+          <p>Add new items to your inventory.</p>
+        </div>
+
+        <!--Cancelled Items-->
+        <div
+          id="cancelledItemsContent"
+          class="content-section"
+          style="display: none"
+        >
+          <h1 class="page-title">Cancelled Items</h1>
+          <p>View cancelled or removed items.</p>
+        </div>
+        <!--Transaction History-->
+        <div
+          id="transactionHistoryContent"
+          class="content-section"
+          style="display: none"
+        >
+          <h1 class="page-title">Transaction History</h1>
+          <p>View your transaction history.</p>
+        </div>
+
+        <!--Settings-->
+        <div id="settingsContent" class="content-section" style="display: none">
+          <h1 class="page-title">Settings</h1>
+          <p>Manage your account settings.</p>
+        </div>
+      </main>
+    </div>
+
+    <script src="/Wallet/static/JS/inventory.js" defer></script>
+  </body>
+</html>
