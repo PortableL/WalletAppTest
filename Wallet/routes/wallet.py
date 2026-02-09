@@ -6,18 +6,18 @@ from ..utils import no_cache
 
 wallet_bp = Blueprint('wallet', __name__)
 
-# Home/Dashboard - Show wallet balance and recent transactions
 @wallet_bp.route('/home')
 @login_required
+@no_cache  # ← ADD THIS
 def home():
-    # Get or create wallet for current user
     wallet = Wallet.query.filter_by(user_id=current_user.id).first()
     if not wallet:
         wallet = Wallet(user_id=current_user.id, balance=0.0)
         db.session.add(wallet)
         db.session.commit()
+    else:
+        db.session.refresh(wallet)  # ← ADD THIS to force fresh data
     
-    # Get recent transactions (last 10)
     transactions = Transaction.query.filter_by(wallet_id=wallet.id)\
                                    .order_by(Transaction.date.desc())\
                                    .limit(10).all()
@@ -41,24 +41,26 @@ def cashin_options():
 def cashin():
     if request.method == 'POST':
         try:
-            # Get and validate amount
             amount = float(request.form.get('amount', 0))
             
             if amount <= 0:
                 flash('Amount must be greater than 0', category='error')
                 return redirect(url_for('wallet.cashin'))
             
-            # Get or create user's wallet
             wallet = Wallet.query.filter_by(user_id=current_user.id).first()
             if not wallet:
                 wallet = Wallet(user_id=current_user.id, balance=0.0)
                 db.session.add(wallet)
-                db.session.flush()  # Get wallet.id before creating transaction
+                db.session.flush()
             
-            # Update balance
+            # DEBUG: Print before update
+            print(f"Before: {wallet.balance}")
+            
             wallet.balance += amount
             
-            # Create transaction record
+            # DEBUG: Print after update
+            print(f"After: {wallet.balance}")
+            
             transaction = Transaction(
                 amount=amount,
                 transaction_type='cash_in',
@@ -66,24 +68,20 @@ def cashin():
                 wallet_id=wallet.id
             )
             db.session.add(transaction)
-            
-            # Save to database
             db.session.commit()
+            
+            # DEBUG: Print after commit
+            print(f"Committed: {wallet.balance}")
             
             flash(f'Successfully added ₱{amount:.2f} to your wallet!', category='success')
             return redirect(url_for('wallet.home'))
             
-        except ValueError:
-            flash('Invalid amount. Please enter a valid number.', category='error')
-            return redirect(url_for('wallet.cashin'))
-        
         except Exception as e:
-            db.session.rollback()  # Rollback if error occurs
+            db.session.rollback()
             flash('An error occurred. Please try again.', category='error')
-            print(f"Error: {e}")  # For debugging
+            print(f"Error: {e}")
             return redirect(url_for('wallet.cashin'))
     
-    # GET request - show the form
     return render_template('wallet/Cashin.html', user=current_user)
 
 
