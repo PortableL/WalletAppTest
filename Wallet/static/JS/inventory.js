@@ -183,3 +183,61 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 });
+
+// Get filter elements
+const statusFilter = document.getElementById('statusFilter');
+const categoryFilter = document.getElementById('categoryFilter');
+const searchInput = document.getElementById('itemSearch');
+
+// Status Filter
+statusFilter.addEventListener('change', function () {
+  filterTable();
+});
+
+// Category Filter
+categoryFilter.addEventListener('change', function () {
+  filterTable();
+});
+
+// Search Filter
+searchInput.addEventListener('input', function () {
+  filterTable();
+});
+
+// Main filter function
+function filterTable() {
+  const selectedStatus = statusFilter.value;
+  const selectedCategory = categoryFilter.value;
+  const searchTerm = searchInput.value.toLowerCase();
+
+  const tableRows = document.querySelectorAll('#itemsTableBody .table-row');
+
+  tableRows.forEach((row) => {
+    // Get data from the row
+    const statusBadge = row.querySelector('.status-badge');
+    const rowStatus = statusBadge.textContent.trim();
+
+    const categoryCell = row.querySelector('td:nth-child(4)'); // "Other Names" column shows category
+    const rowCategory = categoryCell.textContent.trim();
+
+    const itemName = row.querySelector('.item-name').textContent.toLowerCase();
+    const itemId = row.querySelector('.item-id').textContent.toLowerCase();
+
+    // Check all filters
+    const statusMatch =
+      selectedStatus === 'all' || rowStatus === selectedStatus;
+    const categoryMatch =
+      selectedCategory === 'all' || rowCategory === selectedCategory;
+    const searchMatch =
+      searchTerm === '' ||
+      itemName.includes(searchTerm) ||
+      itemId.includes(searchTerm);
+
+    // Show row only if ALL filters match
+    if (statusMatch && categoryMatch && searchMatch) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+}
